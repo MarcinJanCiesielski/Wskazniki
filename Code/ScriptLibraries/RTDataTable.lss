@@ -1,0 +1,299 @@
+'++LotusScript Development Environment:2:5:(Options):0:74
+%REM
+	Copyright 2009 IBM Corporation
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+	
+	Library Class RTDataTable
+	Created Jun 23, 2009 by Andre Guirard/Cambridge/IBM
+	Description: This library supports the reading of data from a table in a rich text
+		field. The table might have a header row listing the column names. The values
+		read are returned in generic "Record" records from which the caller can either
+		read by column name, or numeric index.
+%END REM
+Option Public
+Option Declare
+
+
+'++LotusScript Development Environment:2:5:(Forward):0:1
+Declare Class RTDataTable
+Declare Class RTDRecord
+
+'++LotusScript Development Environment:2:5:(Declarations):0:10
+
+Const ERR_RTD_NO_TABLE = 17860 ' there was no table in the rich text field.
+Const ERR_RTD_MISMATCH = 17861 ' the table doesn't contain the number of columns you specified.
+
+Private Const NL = {
+}
+
+%REM
+	Class RTDataTable
+	Description: A data table in a rich text field. This is useful for
+		storing configuration data in a profile document, for instance.
+%END REM
+Class RTDataTable
+	m_first As RTDRecord
+	m_last As RTDRecord
+	m_current As RTDRecord
+	m_col As Integer ' index of next column.
+	m_cCols As Integer ' number of columns
+	m_cellContent As String ' text so far in current cell
+	m_inited As Boolean
+	m_inCell As Boolean	' whether the SAX parser is inside a tablecell element
+	m_inPar As Boolean	' whether we've seen a <par> since the beginning of the tablecell.
+	m_rows As Long ' how many rows of data.
+	
+	Public Indexes List As Integer ' key is column name, value is array index
+	Public Fieldnames As String ' if blank, read from table.
+	Public SkipFirstRow As Boolean ' set True if the table contains a title row that you want to skip.
+	
+	%REM
+		Property Get Rows
+		Description: Return number of rows in the table (after Load is called).
+	%END REM
+	Public Property Get Rows As Long
+		Rows = m_rows
+	End Property
+	
+	Private Sub SAX_Characters( Source As NotesSAXParser, ByVal Characters As String, ByVal Length As Long )
+		If m_inPar Then
+			m_cellContent = m_cellContent & Characters
+		End If
+	End Sub
+	
+	Private Sub SAX_EndElement( Source As NotesSAXParser, ByVal ElementName As String )
+		Select Case elementName
+		Case "tablerow"
+			If m_inited Then
+				If Not m_current Is Nothing Then
+					me.Append m_current
+					Set m_current = Nothing
+				End If
+				If m_col <> m_cCols Then 
+					Error ERR_RTD_MISMATCH, "Number of columns (" & m_col & ") doesn't match number of fieldnames (" & m_cCols & ")."
+				End if
+			Else
+				m_inited = True ' the next row will be read as data
+				m_cCols = m_col
+			End If
+			m_col = 0
+		Case "tablecell"
+			m_inCell = False
+			m_inPar = False
+			' cell content is now complete. What to do with it?
+			If m_inited Then
+				m_current.SetString m_col, m_cellContent
+			Else
+				' cell contains fieldname.
+				m_cellContent = LCase(FullTrim(Replace(m_cellContent, Split(NL & ";,;" & Chr$(9), ";"), Split(";;", ";"))))
+				If m_col = 1 Then fieldnames = m_cellContent Else fieldnames = fieldnames & "," & m_cellContent
+				Indexes(m_cellContent) = m_col
+			End If
+			m_cellContent = ""
+		End Select
+	End Sub
+	
+	%REM
+		Sub SAX_StartElement
+		Description: Process the beginning of an XML element.
+	%END REM
+	Private Sub SAX_StartElement( Source As NotesSAXParser, ByVal ElementName As String, Attributes As NotesSAXAttributeList )
+		Select Case elementName
+		Case "tablerow"
+			m_col = 0
+			If m_inited Then
+				Set m_current = New RTDRecord(Me, m_cCols)
+			Else
+				' todo
+			End If
+		Case "tablecell"
+			m_col = m_col + 1
+			m_inCell = True
+		Case "par"
+			If m_inCell Then
+				If m_inPar Then ' the first par in a cell just represents the start of the text
+					m_cellContent = m_cellContent & NL
+				Else	' subsequent pars represent line breaks
+					m_inPar = true
+				End If
+			End If
+		Case "break"
+			If m_inCell Then m_cellContent = m_cellContent & NL
+		End Select
+	End Sub
+	
+	%REM
+		Sub Load
+		Description: Load data from a table in a rich text item of a document.
+		Arguments:
+			docPro: the document containing the data.
+			itemName: The name of the rich text item that contains a table.
+	%END REM
+	Sub Load(docPro As NotesDocument, itemName$)
+		Dim session As New NotesSession
+		Dim dxle As NotesDXLExporter
+		Dim stream As NotesStream
+		Dim saxp As NotesSAXParser
+		Dim docExp As NotesDocument
+		
+		If docPro.Hasitem("$Name") Then ' profile doc doesn't export sensibly
+			Set docExp = docPro.Parentdatabase.Createdocument
+			docPro.Copyallitems docExp, true
+			docExp.Removeitem "$Name"
+		Else
+			Set docExp = docPro
+		End If
+		Set stream = session.Createstream
+		Set dxle = session.Createdxlexporter(docExp, stream)
+		dxle.Restricttoitemnames = itemName
+		dxle.Omitrichtextattachments = True
+		Set saxp = session.Createsaxparser(stream)
+		On Event SAX_Characters From saxp Call SAX_Characters
+		On Event SAX_EndElement From saxp Call SAX_EndElement
+		On Event SAX_StartElement From saxp Call SAX_StartElement
+		
+		Dim fnames
+		If Len(Fieldnames) Then
+			fnames = FullTrim(Split(fieldnames, ","))
+			m_cCols = UBound(fnames)+1
+			Dim i%
+			For i = 1 To m_cCols
+				Indexes(fnames(i-1)) = i
+			Next
+			m_inited = true
+		End if
+		dxle.Process
+		saxp.Process
+		Exit sub
+	'Error ERR_RTD_NO_TABLE, "There is no table in the rich text field. //RTDataTable.Load"
+	End Sub
+	
+	%REM
+		Property First
+		Description: Retrieve the first record of table data.
+	%END REM
+	Public Property Get First As RTDRecord
+		Set First = m_first
+	End Property
+	
+	Private Sub Append(rec As RTDRecord)
+		If m_first Is Nothing Then
+			Set m_first = rec
+		Else
+			Set m_last.Next = rec
+		End If
+		Set m_last = rec
+		m_rows = m_rows + 1
+	End Sub
+	
+	%REM
+		Sub Delete
+		Description: Aggressively delete the list... LotusScript sometimes doesn't handle it all.
+	%END REM
+	Sub Delete
+		Dim node As RTDRecord
+		Do Until m_first Is Nothing
+			Set node = m_First
+			Delete m_first
+			Set m_first = node
+		Loop
+	End Sub
+End Class
+
+%REM
+	Class RTDRecord
+	Description: Represents one row from the data table.
+%END REM
+Class RTDRecord
+	data() As String
+	Public Next As RTDRecord
+	parent As RTDataTable
+	
+	%REM
+		Sub New
+		Description: Internal use only.
+	%END REM
+	Sub New(parent As RTDataTable, ByVal cols%)
+		Dim i%
+		ReDim data(1 To cols)
+		Set me.parent = parent
+	End Sub
+	
+	%REM
+		Function index
+		Description: Convert a column name to the corresponding array index.
+			If given a number, it's already an array index so return the number.
+	%END REM
+	Private Function index(ind)
+		If DataType(ind) = 8 Then
+			index = parent.Indexes(LCase(ind))
+		Else
+			index = ind
+		End If
+	End Function
+	
+	%REM
+		Sub SetString
+		Description: Internal method, do not use.
+	%END REM
+	Sub SetString(ind, value$)
+		data(index(ind)) = value
+	End Sub
+	
+	%REM
+		Function GetString
+		Description: Return the text read from the column whose name or index is 'ind'.
+			e.g. rtr.GetString("Price")
+	%END REM
+	Function GetString(ind) As String
+		On Error GoTo oops
+		GetString = data(index(ind))
+		Exit Function
+oops:
+		Error Err, Error & " //RTDataTable.GetString(" & ind & ")"
+	End Function
+	
+	%REM
+		Function GetNumber
+		Description: Read the value from a column with a given name or index,
+			assuming the value is numeric. The value 'def' is the default value
+			to return if the column is blank.
+			You could do the same with Cdbl(rtr.GetString(ind)).
+	%END REM
+	Function GetNumber(ind, ByVal def%) As Double
+		Dim tmp As String
+		tmp = data(index(ind))
+		If Len(tmp) Then GetNumber = CDbl(tmp) Else GetNumber = def
+	End Function
+	
+	%REM
+		Function GetList
+		Description: Read the value from a column if the column contains
+			a list value. Returns an array of the values found. The arguments
+			are the column name or index, 'ind', and 'delims', a string containing
+			one or more alternate delimiters, e.g. ",;" if list items might be
+			delimited by either comma or semicolon.
+			Using FullTrim on the return value to eliminate blank entries and
+			excess whitespace, is advised.
+	%END REM
+	Function GetList(ind, delims$) As Variant
+		Dim tmp As String, res, adelim$, i%
+		tmp = data(index(ind))
+		GetList = Split(tmp, Left$(delims, 1))
+		For i = 2 To Len(delims)
+			adelim = Mid$(delims, i, 1)
+			GetList = Split(Join(GetList, adelim), adelim)
+		Next
+	End Function
+End Class

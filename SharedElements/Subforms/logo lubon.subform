@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='utf-8'?>
+<note class='form' xmlns='http://www.lotus.com/dxl' version='9.0' maintenanceversion='1.0'
+ replicaid='C1257DA500423AF7'>
+<noteinfo noteid='142' unid='FCD3E18025D784CCC125797C0028654F' sequence='3'>
+<created><datetime>20120105T082113,75+01</datetime></created>
+<modified><datetime>20141205T130325,17+01</datetime></modified>
+<revised><datetime>20120224T134420,25+01</datetime></revised>
+<lastaccessed><datetime>20141205T130325,17+01</datetime></lastaccessed>
+<addedtofile><datetime>20141205T130325,17+01</datetime></addedtofile></noteinfo>
+<updatedby><name>CN=Marcin Ciesielski/O=LUBON</name></updatedby>
+<wassignedby><name>CN=Marcin Ciesielski/O=LUBON</name></wassignedby>
+<item name='OriginalModTime'><datetime dst='true'>20080708T161338,57+02</datetime></item>
+<item name='$Fields'><text>prev_activitySectionRight</text></item>
+<item name='$HTMLCode' sign='true'>
+<rawitemdata type='1'>
+X/8QAAIADwAHAAAAAAAAAA==
+</rawitemdata></item>
+<item name='$TITLE'><text>logo lubon</text></item>
+<item name='$Info' sign='true'>
+<rawitemdata type='1'>
+hhgBAIAAAAAAgAAAAQABAP///wAAAAAA
+</rawitemdata></item>
+<item name='$Flags'><text>CUAx3</text></item>
+<item name='$DesignerVersion'><text>8.5.2</text></item>
+<item name='$$ScriptName' summary='false' sign='true'><text>logo lubon</text></item>
+<item name='$Body' sign='true'>
+<rawitemdata type='1'>
+gQKC/1oAAQAAAAAAAAABAKAFAACgBQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAABAAAAAJSEoAUKAKAFCgAAAGQAAQAAAAQAAAC7/yAAAQATAKJoo2MUABIAAAAQAAAA
+AAAAAAAA8D8DAIMEAQCF/wgAAQAACt0GAQCZAJkAHAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAB9
+ABwAAAABAJ4AWwAAAAAAAAAAAAAAAAAAAAAA9v8qAAAAAAADABMACAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAGxvZ28uZ2lm3gYBAJkAhf8IAAEAAAg=
+</rawitemdata></item></note>
+

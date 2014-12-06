@@ -1,0 +1,88 @@
+'++LotusScript Development Environment:2:5:(Options):0:74
+%REM
+	Library OperacjeNaWskaznikach
+	Created Apr 11, 2012 by Marcin Ciesielski/LUBON
+	Description: Comments for Library
+%END REM
+Option Public
+Option Declare
+
+
+'++LotusScript Development Environment:2:5:(Forward):0:1
+Declare Function sprawdzRok (RokDocelowy As String) As Boolean
+Declare Function kopiujWskazniki (RokZrodlowy, RokDocelowy As string) As Boolean
+
+'++LotusScript Development Environment:2:5:(Declarations):0:10
+Const CFG_WIDOK_WSKAZNIKI = "Definicje_wskaznikow"
+
+'++LotusScript Development Environment:2:1:sprawdzRok:6:8
+
+%REM
+	Function sprawdzRok
+	Description: Sprawdza czy dla roku dolelowego zostal już wystawione wskaźniki jeżeli tak to zwraca TRUE w przeciwnym wypadku FALSE
+%END REM
+Function sprawdzRok (RokDocelowy As String) As Boolean
+		
+	Dim ns As NotesSession
+	Dim ndb As NotesDatabase
+	Dim nv As NotesView
+	Dim ndocc As NotesDocumentCollection
+	Dim intDef As Long 'liczba definicji wskaźników dla danego roku
+	Set ns = New NotesSession
+	
+	Set ndb = ns.Currentdatabase
+	Set nv = ndb.Getview(CFG_WIDOK_WSKAZNIKI)
+	Set ndocc = nv.Getalldocumentsbykey(RokDocelowy,true)
+	
+	intDef = ndocc.count
+	
+	Print "Ilość dokumentów: " & intDef
+	
+	If intDef = 0 Then
+		sprawdzRok = false
+		Exit function
+	Else
+		sprawdzRok = True
+		Exit function
+End If
+	
+End Function
+
+'++LotusScript Development Environment:2:1:kopiujWskazniki:5:8
+%REM
+	Function kopiujWskazniki
+	Description: Comments for Function
+%END REM
+Function kopiujWskazniki (RokZrodlowy, RokDocelowy As string) As Boolean
+	Dim ns As NotesSession
+	Dim nwork As NotesUIWorkspace
+	Dim nv As NotesView
+	Dim ndocc As NotesDocumentCollection
+	Dim ndoc As NotesDocument 'istniejąca definicja
+	Dim ndocnew As NotesDocument 'nowa definicja wskaźnika
+	Dim intIlosc As Long
+	Dim i As Long
+	Dim strTekst As Variant
+	
+	
+	Set ns = New NotesSession
+	Set nv = ns.CurrentDatabase.GetView(CFG_WIDOK_WSKAZNIKI)
+	
+	Set ndocc = nv.Getalldocumentsbykey(RokZrodlowy,True)
+	
+	intIlosc = ndocc.Count
+	
+	Print "Ilość: " & intIlosc
+	
+	For i=1 To intIlosc
+		Set ndoc = ndocc.Getnthdocument(i)
+		Set ndocnew = New NotesDocument(ns.Currentdatabase)
+		Call ndoc.Copyallitems(ndocnew)
+		Call ndocnew.Replaceitemvalue("RokObrotowy", RokDocelowy)
+		Call ndocnew.Save(true,false)
+	Next 
+	
+	kopiujWskazniki = True
+	
+End Function
+

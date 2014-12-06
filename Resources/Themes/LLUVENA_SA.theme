@@ -1,0 +1,33 @@
+<!--
+	Zawartość kompozycji domyślnej korzysta z dziedziczenia kompozycji.
+ 
+	Kompozycje aplikacji mogą rozszerzać istniejącą kompozycję globalną przy użyciu
+	atrybutu extends.  Istniejące kompozycje obejmują następujące opcje:
+ 
+	1. webstandard 2. oneui 3. notes
+-->
+<theme extends="webstandard">
+	<!-- 
+		Użyj tego wzorca, aby włączyć zasoby (na przykład arkusze stylów
+		i plików JavaScript używanych przez tę kompozycję.
+	-->
+	<!--
+	<resource>
+		<content-type>text/css</content-type>
+		<href>mystylesheet.css</href>
+	</resource>
+	-->
+
+	<!--
+		Użyj tego wzorca, aby zdefiniować pary nazwa/wartość właściwości dla elementów sterujących
+	-->
+	<!--
+	<control>
+		<name>[Control Name]</name>
+		<property>
+			<name>[property Name]</name>
+			<value>[property Value]</value>
+		</property>
+	</control>
+	-->
+</theme>

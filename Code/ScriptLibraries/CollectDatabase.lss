@@ -1,0 +1,70 @@
+'++LotusScript Development Environment:2:5:(Options):0:74
+%REM
+	Library CollectDatabase
+	Created Nov 25, 2014 by Marcin Ciesielski/LUBON
+	Description: Comments for Library
+%END REM
+Option Public
+Option Declare
+
+
+
+'++LotusScript Development Environment:2:5:(Forward):0:1
+Declare Public Class CollectForms
+
+'++LotusScript Development Environment:2:5:(Declarations):0:10
+%REM
+	Class CollectForms
+	Description: Comments for Class
+%END REM
+Public Class CollectForms
+	Private db As NotesDatabase
+	
+	Sub New(dbe As NotesDatabase)
+		Set db = dbe
+	End sub
+	
+	Sub Delete()
+		Set db = nothing
+	End Sub
+	
+	Public Function getUnusedForms() As String
+		REM TODO
+		Dim temp As Variant
+		temp = getAllFormsNames()
+		
+	End function
+	
+	Private Function getAllFormsNames() As String
+		REM TODO
+		Dim formsNames() As String
+		Dim formsCount, k As Integer
+		Dim allForms As variant
+		
+		allForms = db.Forms
+		formsCount = 0
+		
+		ForAll form In allForms
+			ReDim Preserve formsNames(formsCount + 1)
+			formsNames(formsCount) = form.Name
+			formsCount = formsCount + 1
+		End ForAll
+		
+		
+		
+	End Function
+	
+	Private Function getUsedFormsNames() As String
+		REM TODO
+	End Function
+	
+	Private Function isInCollection(element As Variant, collection() As Variant) As Boolean
+		Forall temp In collection
+			If temp = element Then
+				isInCollection = True
+				Exit function
+			End If
+		End ForAll
+		isInCollection = false
+	End Function
+End Class

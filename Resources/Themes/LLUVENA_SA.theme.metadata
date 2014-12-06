@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?><note class="form" maintenanceversion="1.0" replicaid="C1257DA500423AF7" version="9.0" xmlns="http://www.lotus.com/dxl">
+<noteinfo noteid="14a" sequence="2" unid="CB1F0E202187D0BBC12579AE004569DB">
+<created><datetime>20120224T133810,83+01</datetime></created>
+<modified><datetime>20141205T130325,21+01</datetime></modified>
+<revised><datetime>20120224T133810,97+01</datetime></revised>
+<lastaccessed><datetime>20141205T130325,21+01</datetime></lastaccessed>
+<addedtofile><datetime>20141205T130325,21+01</datetime></addedtofile></noteinfo>
+<updatedby><name>CN=Marcin Ciesielski/O=LUBON</name></updatedby>
+<wassignedby><name>CN=Marcin Ciesielski/O=LUBON</name></wassignedby>
+<item name="$TITLE"><text>LLUVENA_SA.theme</text></item>
+<item name="$DesignerVersion"><text>8.5.2</text></item>
+<item name="$Flags"><text>34567Cg~`</text></item>
+
+
+<item name="$FileNames" sign="true"><text>LLUVENA_SA.theme</text></item></note>

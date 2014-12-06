@@ -1,0 +1,130 @@
+'++LotusScript Development Environment:2:5:(Options):0:74
+%REM
+	Library listTools
+	Created Jun 19, 2012 by Marcin Ciesielski/LUBON
+	Description: Comments for Library
+%END REM
+Option Public
+Option Declare
+
+
+'++LotusScript Development Environment:2:5:(Forward):0:1
+Declare Function UniqueA(vIn As Variant) As Variant
+Declare Function AddToList (Value As Variant, ValueList As Variant)
+Declare Function sortList (srcLst As Variant) As Variant
+Declare Function isInList(valueString As Variant, valueList As Variant) As Boolean
+
+'++LotusScript Development Environment:2:5:(Declarations):0:2
+
+'++LotusScript Development Environment:2:1:UniqueA:1:8
+Function UniqueA(vIn As Variant) As Variant
+ Dim lsTemp List As String     'Create the List
+ Dim astemp() As String        'A place To store the compacted array
+ Dim iCount As Integer         'Count how many uniques we find
+ 
+'Make sure they sent us an array of strings
+ If Not IsArray(vIn) Then
+  MsgBox "Unique requires an array As input"
+  UniqueA = vIn
+  Exit Function
+ ElseIf TypeName( vIn(0) ) <> "STRING" Then
+  MsgBox "Unique requires an array of strings As input. vIn(0) Is a " _
+  + TypeName( vIn(0) )
+  UniqueA = vIn
+  Exit Function
+ End If
+ 
+ ForAll s In vIn
+ 'If the entry isn’t In the list…
+  If Not IsElement( lsTemp(s) ) Then
+       'Add it To the List
+   lsTemp(s) = ""
+   iCount = iCount + 1
+  End If
+ End ForAll
+ 
+ 'Note that there’s no “preserve” keyword here so this Is relatively quick
+ ReDim asTemp(iCount-1)
+ 
+ iCount = 0
+ 'Copy all the unique elements into the temp array
+ ForAll v In lsTemp
+  asTemp(iCount) = ListTag(v)
+  iCount = iCount + 1
+ End ForAll
+ 
+'Return the temp array
+ UniqueA = asTemp
+End Function
+
+
+
+'++LotusScript Development Environment:2:1:AddToList:1:8
+Function AddToList (Value As Variant, ValueList As Variant)
+	Dim tmpValueList As Variant
+	Dim i, x As long
+	'Load the array element by element so that the datatypeis preserved
+	ReDim tmpValueList(UBound(ValueList))
+	For i = 0 To UBound(ValueList)
+		tmpValueList(i) = ValueList(i)
+	Next
+	' Determine If we are dealing With a New List, If absolutely no values In the first entry, Then add New value To 0
+	If UBound(tmpValueList) = 0 And CStr(tmpValueList(0)) = "" Then
+		x = 0
+	Else
+		x = UBound(tmpValueList) + 1
+	End If
+	ReDim Preserve tmpValueList(x)
+	tmpValueList(x) = Value
+	AddToList = tmpValueList
+End Function
+
+
+'++LotusScript Development Environment:2:1:sortList:5:8
+%REM
+	Function sortList
+	Description: Comments for Function
+%END REM
+Function sortList (srcLst As Variant) As Variant
+	' sorts incoming list
+	Dim top As Integer
+	Dim bottom As Integer
+	Dim CurrentItem As Integer
+	Dim NextItem As Integer
+	Dim tmpVar As Variant ' temp variable to hold current value being moved in list
+
+	If Not (IsArray(srcLst)) Then
+		' not a list, return original value
+		SortList = srcLst
+	End If
+
+	top=UBound (srcLst)
+	Bottom=LBound (srcLst)
+
+	For CurrentItem=bottom To top
+		NextItem = CurrentItem
+		Do While NextItem > Bottom
+			If (srcLst(NextItem) > srcLst(NextItem-1)) Then
+				Exit Do
+			Else
+				tmpVar=srcLst(NextItem)
+				srcLst(NextItem)=srcLst(NextItem-1)
+				srcLst(NextItem-1)=tmpVar
+			End If
+			NextItem=NextItem-1
+		Loop
+	Next
+	SortList = srcLst
+End Function
+
+
+'++LotusScript Development Environment:2:1:isInList:1:8
+Function isInList(valueString As Variant, valueList As Variant) As Boolean
+	isInList=False
+	ForAll x In valueList
+		If valueString=x Then
+			isInList=True
+			Exit Function
+		End If
+	End ForAll
+End Function

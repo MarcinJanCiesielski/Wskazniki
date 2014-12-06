@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?><note class="filter" maintenanceversion="1.0" replicaid="C1257DA500423AF7" version="9.0" xmlns="http://www.lotus.com/dxl">
+<noteinfo noteid="196" sequence="21" unid="08E682C9B338FCF5C1257A22003B453D">
+<created><datetime dst="true">20120619T124723,49+02</datetime></created>
+<modified><datetime>20141205T130325,59+01</datetime></modified>
+<revised><datetime dst="true">20120626T070318,40+02</datetime></revised>
+<lastaccessed><datetime>20141205T130325,59+01</datetime></lastaccessed>
+<addedtofile><datetime>20141205T130325,59+01</datetime></addedtofile></noteinfo>
+<updatedby><name>CN=Marcin Ciesielski/O=LUBON</name></updatedby>
+<wassignedby><name>CN=Marcin Ciesielski/O=LUBON</name></wassignedby>
+<item name="$TITLE" sign="true"><text>listTools</text></item>
+<item name="$Flags"><text>s34Q</text></item>
+<item name="$PublicAccess" sign="true"><text>1</text></item>
+
+</note>

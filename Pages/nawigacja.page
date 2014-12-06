@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='utf-8'?>
+<note class='form' xmlns='http://www.lotus.com/dxl' version='9.0' maintenanceversion='1.0'
+ replicaid='C1257DA500423AF7'>
+<noteinfo noteid='172' unid='D4FBC4ACFC030FC6C12579DD0038C1B3' sequence='2'>
+<created><datetime dst='true'>20120411T121956,03+02</datetime></created>
+<modified><datetime>20141205T130325,41+01</datetime></modified>
+<revised><datetime dst='true'>20120411T122216,71+02</datetime></revised>
+<lastaccessed><datetime>20141205T130325,41+01</datetime></lastaccessed>
+<addedtofile><datetime>20141205T130325,41+01</datetime></addedtofile></noteinfo>
+<updatedby><name>CN=Marcin Ciesielski/O=LUBON</name></updatedby>
+<wassignedby><name>CN=Marcin Ciesielski/O=LUBON</name></wassignedby>
+<item name='$HTMLCode' sign='true'>
+<rawitemdata type='1'>
+X/8QAAIADwAHAAAAAAAAAA==
+</rawitemdata></item>
+<item name='$TITLE'><text>nawigacja</text></item>
+<item name='$Comment' sign='true'><text/></item>
+<item name='$Info' sign='true'>
+<rawitemdata type='1'>
+hhgBAIAAAAAAgAAAAQABAP///wAQAAAA
+</rawitemdata></item>
+<item name='$Flags'><text>C34WQ</text></item>
+<item name='$DesignerVersion'><text>8.5.2</text></item>
+<item name='$$ScriptName' summary='false' sign='true'><text>nawigacja</text></item>
+<item name='$Body' sign='true'>
+<rawitemdata type='1'>
+gQKC/1oAAQAAAAAAAAAAAKAFAACgBQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAABAAAAAJSHAAAAAAAAAAAAAAAAAQAAAAQAAACDBAEAhf8IAAEAAAqBAoMEAQCF/wgA
+AQAACt0GAACt/3H/MAAAAAAAAwAWAA4AAAAAAAAAAAAAAAAAAAAAAAAAAABPdXRsaW5lR2xvd255
+AK3/GgAbAAgAAAAOAE91dGxpbmVHbG93bnkA6v8+ABsACUQAAGQAoAUBAAAKAAAAAAAAAAABAAAK
+AQAACgAABQD///8AAQAAAAAAAAAAAAAAAAAAAAAAAADs/w4BIAICAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAgAQAAAAAAAAEAAAoBAAAKAQAACgEAAAoBAAAKAQAACgAAAAAAAAAA
+IAEgAQAAAAAAAAUA////AAUA////AAUA////AAUA////AAUA////AAUA////AAUA////AAUA////
+AAUA////AAUA////AAEAAAAAAAEAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAABAAAAAAABAAAAAAABAAAAAAABAAAAAAABAAAAAAABAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAACuAt4GAACuAIX/CAABAAAK
+</rawitemdata></item></note>
+

@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<note class='filter' xmlns='http://www.lotus.com/dxl' version='9.0' maintenanceversion='1.0'
+ replicaid='C1257DA500423AF7'>
+<noteinfo noteid='156' unid='54B6DB1080DCEA2DC12579D6002AE6D7' sequence='11'>
+<created><datetime dst='true'>20120404T094836,07+02</datetime></created>
+<modified><datetime>20141205T130325,27+01</datetime></modified>
+<revised><datetime dst='true'>20120404T095217,58+02</datetime></revised>
+<lastaccessed><datetime>20141205T130325,27+01</datetime></lastaccessed>
+<addedtofile><datetime>20141205T130325,27+01</datetime></addedtofile></noteinfo>
+<updatedby><name>CN=Marcin Ciesielski/O=LUBON</name></updatedby>
+<item name='$Flags'><text>34CkQ</text></item>
+<item name='$DCRClass'><text>RDBMS</text></item>
+<item name='$TITLE' sign='true'><textlist><text>eJakoscTESTOWA</text></textlist></item>
+<item name='$DCRGenProps' seal='true'><textlist><text>odbc2</text><text>iso</text><text
+/><text>root</text><text/><text/><text>tb_person1</text><text>1</text><text
+>pbT</text><text/><text/><text/><text/></textlist></item>
+<item name='$DesignerVersion'><text>8.5.2</text></item></note>
+
