@@ -1,0 +1,57 @@
+'++LotusScript Development Environment:2:5:(Options):0:74
+%REM
+	Library StringTools
+	Created Dec 7, 2014 by Marcin Ciesielski
+	Description: Comments for Library
+%END REM
+Option Public
+Option Declare
+
+
+'++LotusScript Development Environment:2:5:(Forward):0:1
+Declare Public Function subtract(ByVal baseString As String, stringToSubstract) As String
+Declare Public Function findReplace(ByVal baseString As Variant, find As String, ireplace As String) As String
+
+'++LotusScript Development Environment:2:5:(Declarations):0:2
+
+'++LotusScript Development Environment:2:1:subtract:5:8
+%REM
+	Function StringTools:substract
+	Description: cut out stringToSubstract from baseString 
+%END REM
+Public Function subtract(ByVal baseString As String, stringToSubstract) As String
+	Dim checkString, leftString, rightString  As String
+	Dim n As Integer
+	
+	checkString = baseString
+
+	While InStr(1, checkString, stringToSubstract)<>0
+		n=InStr(1, checkString, stringToSubstract)
+		leftString = Left(checkstring, n-1)
+		rightString=Right(checkString, Len(checkString)-n-Len(stringToSubstract)+1)
+		checkString=leftString + rightString
+	Wend
+	subtract = checkString
+End Function
+
+'++LotusScript Development Environment:2:1:findReplace:6:8
+
+%REM
+	Function StringTools:findReplace
+	Description: replace any occurrence or find in baseString by ireplace
+%END REM
+Public Function findReplace(ByVal baseString As Variant, find As String, ireplace As String) As String
+	Dim checkString, leftString, rightString, saveLeft As String
+	Dim n As Integer
+	
+	checkString=baseString
+	saveLeft=""
+	While InStr(1, checkString, find)<>0 
+		n=InStr(1, checkString, find)
+		leftString = Left(checkString, n-1)
+		rightString = Right(checkString, Len(checkString)-n-Len(find)+1)
+		saveLeft = saveLeft + leftString + ireplace
+		checkString = rightString
+	Wend
+	findReplace= saveLeft + checkString
+End Function
