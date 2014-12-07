@@ -1,0 +1,107 @@
+'++LotusScript Development Environment:2:5:(Options):0:74
+%REM
+	Library FormsCollections
+	Created Nov 25, 2014 by Marcin Ciesielski
+	Description: Comments for Library
+%END REM
+Option Public
+Option Declare
+
+
+'++LotusScript Development Environment:2:5:(Forward):0:1
+Declare Public Function getUnusedForms(db As NotesDatabase) As Variant
+Declare Private Function getAllFormsNames(db As NotesDatabase) As Variant
+Declare Private Function getUsedFormsNames(db As NotesDatabase) As Variant
+Declare Private Function isInCollection(element As Variant, collection As Variant) As Boolean
+
+'++LotusScript Development Environment:2:5:(Declarations):0:10
+Declare Public Function getUnusedForms(db As NotesDatabase) As Variant
+Declare Private Function getAllFormsNames(db As NotesDatabase) As Variant
+Declare Private Function getUsedFormsNames(db As NotesDatabase) As Variant
+Declare Private Function isInCollection(element As Variant, collection As Variant) As Boolean
+
+'++LotusScript Development Environment:2:1:getUnusedForms:2:8
+
+Public Function getUnusedForms(db As NotesDatabase) As Variant
+	Dim usedFormsNames As Variant 'collection of all forms used by documents in database
+	Dim allFormsNames As Variant 'collection of all forms in database
+	Dim unusedFormsNames As Variant 'forms wich exist in database but aren't used by any document
+	Dim numberOfUnusedForms As Integer
+	
+	usedFormsNames = getUsedFormsNames(db)
+	allFormsNames = getAllFormsNames(db)
+	
+	numberOfUnusedForms = 0
+	
+	ForAll form In allFormsNames
+		If Not isInCollection(form, usedFormsNames) Then
+			ReDim Preserve unusedFormsNames(numberOfUnusedForms + 1)
+			unusedFormsNames(numberOfUnusedForms) = form
+			numberOfUnusedForms = numberOfUnusedForms + 1
+		End If
+	End ForAll
+	
+	If numberOfUnusedForms > 0 Then
+		getUnusedForms = unusedFormsNames
+	Else
+		getUnusedForms = Null
+	End If
+End Function
+
+'++LotusScript Development Environment:2:1:getAllFormsNames:2:8
+	
+Private Function getAllFormsNames(db As NotesDatabase) As Variant
+	Dim formsNames() As String
+	Dim formsCount As Integer
+	Dim allForms As Variant
+	
+	allForms = db.Forms
+	formsCount = 0
+	
+	ForAll form In allForms
+		ReDim Preserve formsNames(formsCount + 1)
+		formsNames(formsCount) = form.Name
+		formsCount = formsCount + 1
+	End ForAll
+	
+	getAllFormsNames = formsNames
+End Function
+
+'++LotusScript Development Environment:2:1:getUsedFormsNames:2:8
+
+Private Function getUsedFormsNames(db As NotesDatabase) As Variant
+	Dim docColl As NotesDocumentCollection 'all documents in database
+	Dim usedFormsNames() As String 'collection of forms used by documents
+	Dim formsCount As Integer 'numbers of used formas
+	Dim formName As String
+	Dim doc As NotesDocument
+	
+	Set docColl = db.AllDocuments
+	formsCount = 0
+	Set doc = doccoll.Getfirstdocument()
+	
+	While(Not doc Is Nothing)
+		formName = doc.Getitemvalue("FORM")(0)
+		If Not (isInCollection(formName, usedFormsNames)) Then
+			ReDim Preserve usedFormsNames(formsCount + 1)
+			
+			usedFormsNames(formsCount) = formName
+			formsCount = formsCount + 1
+		End If
+		Set doc = doccoll.Getnextdocument(doc)
+	Wend
+	
+	getUsedFormsNames = usedFormsNames
+End Function
+
+'++LotusScript Development Environment:2:1:isInCollection:2:8
+	
+Private Function isInCollection(element As Variant, collection As Variant) As Boolean
+	ForAll temp In collection
+		If temp = element Then
+			isInCollection = True
+			Exit Function
+		End If
+	End ForAll
+	isInCollection = False
+End Function
