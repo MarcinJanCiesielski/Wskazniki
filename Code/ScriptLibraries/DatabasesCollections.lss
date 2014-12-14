@@ -1,0 +1,129 @@
+'++LotusScript Development Environment:2:5:(Options):0:74
+%REM
+	Library DatabasesCollections
+	Created Dec 14, 2014 by Marcin Ciesielski
+	Description: Comments for Library
+%END REM
+Option Public
+Option Declare
+Use "StringTools"
+
+'++LotusScript Development Environment:2:5:(Forward):0:1
+Declare Class DatabaseInformation
+Declare Public Function getAllDatabasesOnServer() As Variant
+Declare Public Function getAllDatabasesInPath(path As String) As Variant
+
+'++LotusScript Development Environment:2:5:(Declarations):0:10
+Declare Class DatabaseInformation
+Declare Public Function getAllDatabasesOnServer() As Variant
+
+%REM
+	Class DatabaseInformation
+	Description: Comments for Class
+%END REM
+Class DatabaseInformation
+	Public databaseFull As String
+	Public databasePath As String
+	Public databaseName As String
+	Public databaseTitle As String
+	
+	Sub New()
+		databaseFull = ""
+		databasePath = ""
+		databaseName = ""
+		databaseTitle = ""
+	End Sub
+End Class
+
+'++LotusScript Development Environment:2:1:getAllDatabasesOnServer:6:8
+
+%REM
+	Function DatabaseCollection:getAllDatabasesOnServer
+	Description: return collection of all databases on server to which executor has read rights
+%END REM
+Public Function getAllDatabasesOnServer() As Variant
+
+	Const FUNCTION_NAME = "DatabaseCollection:getAllDatabasesOnServer"
+	On Error GoTo ET_ERROR
+
+	Dim session As New NotesSession
+	Dim dbDir As NotesDbDirectory
+	Dim db As NotesDatabase
+	Dim allDatabasesOnServer() As DatabaseInformation
+	Dim numberOfDatabases As Integer
+	
+	Set dbDir = session.Getdbdirectory(session.Currentdatabase.Server)
+	
+	numberOfDatabases = 0
+	Set db = dbdir.Getfirstdatabase(DATABASE)
+	While (Not db Is Nothing)
+		ReDim Preserve allDatabasesOnServer(numberOfDatabases)
+		Set allDatabasesOnServer(numberOfDatabases) = New DatabaseInformation
+		allDatabasesOnServer(numberOfDatabases).databaseFull = db.Filepath
+		allDatabasesOnServer(numberOfDatabases).databasePath = subtract(db.Filepath, db.Filename)
+		allDatabasesOnServer(numberOfDatabases).databaseName = db.Filename
+		allDatabasesOnServer(numberOfDatabases).databaseTitle = db.Title
+		
+		numberOfDatabases = numberOfDatabases + 1
+		Set db = dbdir.Getnextdatabase()
+	Wend
+	
+	getAllDatabasesOnServer = allDatabasesOnServer
+
+ET_END:
+	Set session = Nothing
+	Set dbDir = Nothing
+	
+	Exit Function
+
+ET_ERROR:
+	Dim errMsg As String
+	errMsg = "Error " & Str(Err) & " - " & Error$ & "; " & Chr(13)
+	errMsg = errMsg & FUNCTION_NAME & "/l: " & CStr(Erl)
+	Print errMsg
+	
+	Resume ET_END
+End Function
+
+
+
+'++LotusScript Development Environment:2:1:getAllDatabasesInPath:5:8
+%REM
+	Function DatabasesCollections:getAllDatabasesFromPath
+	Description: retutn all databases from given path - you should use '\' if necessary
+%END REM
+Public Function getAllDatabasesInPath(path As String) As Variant
+
+	Const FUNCTION_NAME = "DatabasesCollections:getAllDatabasesFromPath"
+	On Error GoTo ET_ERROR
+
+	Dim allDatabasesOnServer As Variant
+	Dim allDatabasesInPath() As DatabaseInformation
+	Dim numberOfdatabasesInPath As Integer
+	
+	allDatabasesOnServer = getAllDatabasesOnServer()
+	
+	numberOfDatabasesInPath = 0
+	
+	ForAll db In allDatabasesOnServer
+		If(InStr(1, db.databaseFull, path, 5)) Then
+			ReDim Preserve allDatabasesInPath(numberOfDatabasesInPath)
+			Set allDatabasesInPath(numberOfDatabasesInPath) = db
+			numberOfDatabasesInPath = numberOfDatabasesInPath +  1
+		End If
+	End ForAll
+
+	getAllDatabasesInPath = allDatabasesInPath
+	
+ET_END:
+	Set allDatabasesOnServer = Nothing
+	Exit Function
+
+ET_ERROR:
+	Dim errMsg As String
+	errMsg = "Error " & Str(Err) & " - " & Error$ & Chr(13)
+	errMsg = errMsg & FUNCTION_NAME & "/l: " & Cstr(Erl)
+	Print errMsg
+	
+	Resume ET_END
+End Function
