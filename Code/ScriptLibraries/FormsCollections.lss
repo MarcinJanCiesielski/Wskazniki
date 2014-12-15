@@ -25,7 +25,7 @@ Declare Private Function isInCollection(element As Variant, collection As Varian
 Public Function getUnusedForms(db As NotesDatabase) As Variant
 	Dim usedFormsNames As Variant 'collection of all forms used by documents in database
 	Dim allFormsNames As Variant 'collection of all forms in database
-	Dim unusedFormsNames As Variant 'forms wich exist in database but aren't used by any document
+	Dim unusedFormsNames() As String 'forms wich exist in database but aren't used by any document
 	Dim numberOfUnusedForms As Integer
 	
 	usedFormsNames = getUsedFormsNames(db)
@@ -35,7 +35,7 @@ Public Function getUnusedForms(db As NotesDatabase) As Variant
 	
 	ForAll form In allFormsNames
 		If Not isInCollection(form, usedFormsNames) Then
-			ReDim Preserve unusedFormsNames(numberOfUnusedForms + 1)
+			ReDim Preserve unusedFormsNames(numberOfUnusedForms)
 			unusedFormsNames(numberOfUnusedForms) = form
 			numberOfUnusedForms = numberOfUnusedForms + 1
 		End If
@@ -59,7 +59,7 @@ Private Function getAllFormsNames(db As NotesDatabase) As Variant
 	formsCount = 0
 	
 	ForAll form In allForms
-		ReDim Preserve formsNames(formsCount + 1)
+		ReDim Preserve formsNames(formsCount)
 		formsNames(formsCount) = form.Name
 		formsCount = formsCount + 1
 	End ForAll
@@ -83,7 +83,7 @@ Private Function getUsedFormsNames(db As NotesDatabase) As Variant
 	While(Not doc Is Nothing)
 		formName = doc.Getitemvalue("FORM")(0)
 		If Not (isInCollection(formName, usedFormsNames)) Then
-			ReDim Preserve usedFormsNames(formsCount + 1)
+			ReDim Preserve usedFormsNames(formsCount)
 			
 			usedFormsNames(formsCount) = formName
 			formsCount = formsCount + 1
