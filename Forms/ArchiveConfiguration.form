@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='utf-8'?>
+<form name='ArchiveConfiguration' xmlns='http://www.lotus.com/dxl' version='9.0'
+ maintenanceversion='1.0' replicaid='C125792F003FC1F3' publicaccess='false'
+ designerversion='8.5.3' renderpassthrough='true'>
+<noteinfo noteid='1122' unid='A00CB4E0E3D0052CC1257DAF003863E7' sequence='19'>
+<created><datetime>20141215T111555,91+01</datetime></created>
+<modified><datetime>20141219T093955,01+01</datetime></modified>
+<revised><datetime>20141219T093955,00+01</datetime></revised>
+<lastaccessed><datetime>20141219T093955,00+01</datetime></lastaccessed>
+<addedtofile><datetime>20141215T111556,39+01</datetime></addedtofile></noteinfo>
+<updatedby><name>CN=Marcin Ciesielski/O=LUBON</name></updatedby>
+<wassignedby><name>CN=Marcin Ciesielski/O=LUBON</name></wassignedby><code
+ event='options'><lotusscript>Use "DatabasesCollections"
+
+</lotusscript></code><code event='queryopen'><lotusscript>Sub Queryopen(Source As Notesuidocument, Mode As Integer, Isnewdoc As Variant, Continue As Variant)
+	
+End Sub
+</lotusscript></code><code event='postopen'><lotusscript>Sub Postopen(Source As Notesuidocument)
+	Dim ARCHIWUM As String
+	Dim AUDIT As String
+	Dim FIELDNAME As String
+	
+	ARCHIWUM = "Workflow_produkcja\archiwum"
+	AUDIT = "Workflow_produkcja\audit"
+	FIELDNAME = "dbsInPath"
+	
+	Dim databasesInPath As Variant ' contain collection of databases in given path
+	databasesInPath = getAllDatabasesInPath(ARCHIWUM)
+	
+	Dim listValues As NotesItem
+	Set listValues = Source.Document.GetFirstItem(FIELDNAME)
+	
+	
+	Forall db In databasesInPath
+		If Not listValues.Contains(db.databaseTitle &amp; " | " &amp; db.databaseFull) Then
+			Call listValues.AppendToTextList(db.databaseTitle &amp; " | " &amp; db.databaseFull)
+		End If
+	End Forall
+	
+	'Call source.Refresh
+	
+End Sub</lotusscript></code>
+<body><richtext>
+<pardef id='1'/>
+<par def='1'/>
+<pardef id='2' hide='notes web mobile'/>
+<par def='2'><field type='text' allowmultivalues='true' kind='computed' name='dbsInPath'
+ listinputseparators='comma semicolon' listdisplayseparator='semicolon'><code
+ event='defaultvalue'><formula>dbsInPath</formula></code></field><compositedata
+ type='98' prevtype='65418' nexttype='222' afterparcount='7' containertype='65418'
+ aftercontainercount='1' afterbegincount='3'>
+Yg4BAIQAAAAAAAAAAAA=
+</compositedata></par>
+<par def='1'/>
+<par def='1'><field borderstyle='inset' lookupeachchar='false' lookupaddressonrefresh='true'
+ type='keyword' allowmultivalues='true' kind='editable' name='db_for_del_doc'
+ listinputseparators='comma' listdisplayseparator='comma'><keywords helperbutton='false'
+ recalcchoices='true' columns='1' ui='checkbox'><formula>dbsInPath</formula></keywords><code
+ event='defaultvalue'><formula>dbsInPath</formula></code></field></par></richtext></body>
+<item name='$$ScriptName' summary='false' sign='true'><text>ArchiveConfiguration</text></item></form>
+
