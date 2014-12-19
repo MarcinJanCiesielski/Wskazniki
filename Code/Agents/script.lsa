@@ -1,112 +1,45 @@
 <?xml version='1.0' encoding='utf-8'?>
-<note class='filter' xmlns='http://www.lotus.com/dxl' version='9.0' maintenanceversion='1.0'
- replicaid='C1257DA500423AF7'>
-<noteinfo noteid='37e' unid='4ED9F1712DC4DAD3C1257D9B0047C20B' sequence='5'>
+<agent name='script' xmlns='http://www.lotus.com/dxl' version='9.0' maintenanceversion='1.0'
+ replicaid='C125792F003FC1F3' hide='v3' publicaccess='false' designerversion='8.5.3'>
+<noteinfo noteid='74a' unid='4ED9F1712DC4DAD3C1257D9B0047C20B' sequence='29'>
 <created><datetime>20141125T140347,31+01</datetime></created>
-<modified><datetime>20141205T130327,91+01</datetime></modified>
-<revised><datetime>20141125T141047,20+01</datetime></revised>
-<lastaccessed><datetime>20141205T130327,91+01</datetime></lastaccessed>
-<addedtofile><datetime>20141205T130327,91+01</datetime></addedtofile></noteinfo>
+<modified><datetime>20141219T135550,42+01</datetime></modified>
+<revised><datetime>20141219T135550,41+01</datetime></revised>
+<lastaccessed><datetime>20141219T135550,41+01</datetime></lastaccessed>
+<addedtofile><datetime>20141125T140347,34+01</datetime></addedtofile></noteinfo>
 <updatedby><name>CN=Marcin Ciesielski/O=LUBON</name></updatedby>
 <wassignedby><name>CN=Marcin Ciesielski/O=LUBON</name></wassignedby>
-<item name='$TITLE' sign='true'><text>script</text></item>
-<item name='$AssistType' sign='true'><number>65413</number></item>
-<item name='$AssistLastRun' sign='true'>
-<rawitemdata type='400'>
-AAAAAAAAAAA=
-</rawitemdata></item>
-<item name='$AssistDocCount' sign='true'><number>0</number></item>
-<item name='$FlagsExt' sign='true'><text/></item>
-<item name='$AssistFlags' sign='true'><text>Es</text></item>
-<item name='$AssistTrigger'><text>4</text></item>
-<item name='$AssistInfo' sign='true'>
-<rawitemdata type='11'>
-AQAEAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-</rawitemdata></item>
-<item name='$AssistQuery' sign='true'>
-<rawitemdata type='f'>
-gQYAAAAA
-</rawitemdata></item>
-<item name='$Restricted' sign='true'><number>1</number></item>
-<item name='$Flags'><text>fL3</text></item>
-<item name='$DesignerVersion'><text>8.5.3</text></item>
-<item name='$AssistRunInfo' summary='true'>
-<rawitemdata type='3'>
-BgAAAgAACAB6AwAAAAAAAAUAAAAwAAAAAAAAAAAAAAAAAAAA3AAAAAAAAAAAAAAAAAAAABAAAAAA
-AAAAtFdKAJt9JcEAAAAAEWZIAJt9JcHzwT8AL3klwQAAAAAAAAAAAAAAAAAAAAAAAAAAU3RhcnRl
-ZCBydW5uaW5nIGFnZW50ICdzY3JpcHQnIG9uIDIwMTQtMTEtMjUgMTQ6MzE6MDgNClJ1bm5pbmcg
-b24gc2VsZWN0ZWQgZG9jdW1lbnRzOiAxIHRvdGFsDQpGb3VuZCAxIGRvY3VtZW50KHMpIHRoYXQg
-bWF0Y2ggc2VhcmNoIGNyaXRlcmlhDQpSYW4gTG90dXNTY3JpcHQgY29kZQ0KRG9uZSBydW5uaW5n
-IGFnZW50ICdzY3JpcHQnIG9uIDIwMTQtMTEtMjUgMTQ6MzI6MDENCgANCh1bFIKMKeDpQmhIAJt9
-JcGqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
-qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
-qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
-qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
-qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
-qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
-qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
-qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
-qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
-qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
-qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
-qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
-qqqqqqqqqqqqqqqqqqqqqqqq
-</rawitemdata></item>
-<item name='$AssistAction' sign='true'>
-<rawitemdata type='10'>
-gQKF/2wCAAAAAGACAAAnKytMb3R1c1NjcmlwdCBEZXZlbG9wbWVudCBFbnZpcm9ubWVudDoyOjU6
-KE9wdGlvbnMpOjA6NzQKJVJFTQoJQWdlbnQgc2NyaXB0CglDcmVhdGVkIE5vdiAyNSwgMjAxNCBi
-eSBNYXJjaW4gQ2llc2llbHNraS9MVUJPTgoJRGVzY3JpcHRpb246IENvbW1lbnRzIGZvciBBZ2Vu
-dAolRU5EIFJFTQpPcHRpb24gUHVibGljCk9wdGlvbiBEZWNsYXJlClVzZSAiQ29sbGVjdERhdGFi
-YXNlIgoKCicrK0xvdHVzU2NyaXB0IERldmVsb3BtZW50IEVudmlyb25tZW50OjI6NTooRm9yd2Fy
-ZCk6MDoxCkRlY2xhcmUgU3ViIEluaXRpYWxpemUKCicrK0xvdHVzU2NyaXB0IERldmVsb3BtZW50
-IEVudmlyb25tZW50OjI6NTooRGVjbGFyYXRpb25zKTowOjIKCicrK0xvdHVzU2NyaXB0IERldmVs
-b3BtZW50IEVudmlyb25tZW50OjI6MjpJbml0aWFsaXplOjE6MTAKU3ViIEluaXRpYWxpemUKCURp
-bSBzZXNzaW9uIEFzIG5ldyBOb3Rlc1Nlc3Npb24KCURpbSB0ZW1wIEFzIFZhcmlhbnQKCURpbSBj
-ZiBBcyBDb2xsZWN0Rm9ybXMKCglTZXQgY2YgPSBOZXcgQ29sbGVjdEZvcm1zKHNlc3Npb24uQ3Vy
-cmVudGRhdGFiYXNlKQoJdGVtcCA9IGNmLmdldFVudXNlZEZvcm1zKCkKCQpFbmQgU3ViAA==
-</rawitemdata></item>
-<item name='$AssistAction_Ex' sign='true'>
-<rawitemdata type='14'>
-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
-OAARAAoAAAA3
-</rawitemdata></item>
-<item name='$AssistVersion'><datetime>20141125T141047,81+01</datetime></item></note>
+<designchange><datetime>20141219T135550,85+01</datetime></designchange>
+<trigger type='actionsmenu'/>
+<documentset type='runonce'/><code event='options'><lotusscript>%REM
+	Agent script
+	Created Nov 25, 2014 by Marcin Ciesielski/LUBON
+	Description: Comments for Agent
+%END REM
+Option Public
+Option Declare
+Use "removeOldDocuments"
+
+
+</lotusscript></code><code event='initialize'><lotusscript>Sub Initialize
+	Dim session As new NotesSession
+	Dim doc As NotesDocument
+	Dim view As NotesView
+	Dim configField As notesItem
+	Dim temp As Variant
+	
+	Set view = session.Currentdatabase.Getview("(ArchiveConfiguration)")
+	Set doc = view.GetFirstDocument
+	
+	Set configField = doc.Getfirstitem("db_for_del_doc")
+	
+	Call readDbToRemoveDoc(configField)
+	
+	'ForAll t In temp
+	'	Print t
+	'End ForAll
+	
+End Sub</lotusscript></code>
+<rundata processeddocs='0' exitcode='0'>
+<agentmodified><datetime>20141219T135550,24+01</datetime></agentmodified></rundata></agent>
 
